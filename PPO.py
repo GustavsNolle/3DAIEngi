@@ -4,28 +4,6 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.distributions import Categorical
 
-# Define a simple 1D environment
-class Simple1DEnv:
-    def __init__(self, size=10):
-        self.size = size
-        self.goal = size - 1
-        self.state = 0
-
-    def reset(self):
-        self.state = 0
-        return np.array([self.state], dtype=np.float32)
-
-    def step(self, action):
-        # Action: 0 for left, 1 for right
-        if action == 0:
-            self.state = max(0, self.state - 1)
-        elif action == 1:
-            self.state = min(self.goal, self.state + 1)
-        # Reward: 1 if the goal is reached, otherwise a small negative penalty.
-        reward = 1.0 if self.state == self.goal else -0.1
-        done = self.state == self.goal
-        return np.array([self.state], dtype=np.float32), reward, done, {}
-
 # Hyperparameters
 learning_rate = 3e-4
 gamma = 0.99           # Discount factor
@@ -158,56 +136,50 @@ def compute_gae(memory, last_value, gamma=0.99, lmbda=0.95):
     memory.returns = returns
     memory.advantages = advantages
 
-def main():
-    # Create an instance of our custom environment
-    env = Simple1DEnv(size=10)
-    state_dim = 1   # The state is a single number (position)
-    action_dim = 2  # Two possible actions: left or right
+def info():
 
-    ppo_agent = PPO(state_dim, action_dim)
-    memory = Memory()
+    # ppo_agent = PPO(state_dim, action_dim)
+    # memory = Memory()
 
-    timestep = 0
-    episode = 0
+    # timestep = 0
+    # episode = 0
 
-    while timestep < total_timesteps:
-        state = env.reset()
-        for t in range(max_timesteps):
-            timestep += 1
-            # Use the old policy to decide an action
-            action, logprob, state_value = ppo_agent.policy_old.act(state)
-            next_state, reward, done, _ = env.step(action)
+    # while timestep < total_timesteps:
+    #     state = env.reset()
+    #     for t in range(max_timesteps):
+    #         timestep += 1
+    #         # Use the old policy to decide an action
+    #         action, logprob, state_value = ppo_agent.policy_old.act(state)
+    #         next_state, reward, done, _ = env.step(action)
 
-            # Store the transition in memory
-            memory.states.append(state)
-            memory.actions.append(action)
-            memory.logprobs.append(logprob.item())
-            memory.rewards.append(reward)
-            memory.is_terminals.append(done)
-            memory.state_values.append(state_value.item())
+    #         # Store the transition in memory
+    #         memory.states.append(state)
+    #         memory.actions.append(action)
+    #         memory.logprobs.append(logprob.item())
+    #         memory.rewards.append(reward)
+    #         memory.is_terminals.append(done)
+    #         memory.state_values.append(state_value.item())
 
-            state = next_state
+    #         state = next_state
 
-            if done:
-                break
+    #         if done:
+    #             break
 
-        # If the episode didn't end, get the value for the last state; otherwise, it's 0.
-        if done:
-            last_value = 0
-        else:
-            _, _, last_value = ppo_agent.policy_old.act(state)
-            last_value = last_value.item()
+    #     # If the episode didn't end, get the value for the last state; otherwise, it's 0.
+    #     if done:
+    #         last_value = 0
+    #     else:
+    #         _, _, last_value = ppo_agent.policy_old.act(state)
+    #         last_value = last_value.item()
 
-        # Compute returns and advantages using GAE
-        compute_gae(memory, last_value, gamma, lmbda)
+    #     # Compute returns and advantages using GAE
+    #     compute_gae(memory, last_value, gamma, lmbda)
 
-        # Update the PPO agent using the collected trajectory
-        ppo_agent.update(memory)
-        memory.clear()
-        episode += 1
+    #     # Update the PPO agent using the collected trajectory
+    #     ppo_agent.update(memory)
+    #     memory.clear()
+    #     episode += 1
 
-        if episode % 10 == 0:
-            print(f"Episode {episode} \t Timestep {timestep}")
-
-if __name__ == "__main__":
-    main()
+    #     if episode % 10 == 0:
+    #         print(f"Episode {episode} \t Timestep {timestep}")
+    pass
