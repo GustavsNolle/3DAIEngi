@@ -192,18 +192,19 @@ class PhysicsEnv2DAdvanced:
 
 # Example usage (for testing the environment):
 if __name__ == "__main__":
-    env = PhysicsEnv2DAdvanced()
-    obs = env.reset()
-    done = False
-    step = 0
-    while not done:
-        # For demonstration, choose a random action:
-        # Randomly decide to add (0) or remove (1) metal at a random coordinate.
-        action_type = np.random.choice([0, 1])
-        x = np.random.randint(0, env.width)
-        y = np.random.randint(0, env.height)
-        obs, reward, done, info = env.step((action_type, x, y))
-        print(f"Step {step}: Action {(action_type, x, y)} | Reward: {reward}")
-        step += 1
-        if step % 50 == 0:
-            env.render()
+    pass
+    # env = PhysicsEnv2DAdvanced()
+    # obs = env.reset()
+    # done = False
+    # step = 0
+    # while not done:
+    #     # For demonstration, choose a random action:
+    #     # Randomly decide to add (0) or remove (1) metal at a random coordinate.
+    #     action_type = np.random.choice([0, 1])
+    #     x = np.random.randint(0, env.width)
+    #     y = np.random.randint(0, env.height)
+    #     obs, reward, done, info = env.step((action_type, x, y))
+    #     print(f"Step {step}: Action {(action_type, x, y)} | Reward: {reward}")
+    #     step += 1
+    #     if step % 50 == 0:
+    #         env.render()

@@ -104,23 +104,24 @@ class PhysicsEncoder(nn.Module):
 
 # Example usage:
 if __name__ == "__main__":
-    # Suppose the environment state is represented by 5 channels:
-    # Gas Temperature (T_g), Gas Density (n_g), Pressure (P), Metal Mask, Metal Temperature (T_m)
-    # For demonstration, create a dummy batch of two samples.
-    batch_size = 2
-    height = 200
-    width = 100
-    # Create random example data for each channel.
-    T_g = torch.rand(batch_size, height, width) * 20 + 290   # Temperatures around 290-310 K
-    n_g = torch.rand(batch_size, height, width) * 0.2 + 0.9    # Densities around 0.9-1.1
-    P   = torch.rand(batch_size, height, width) * 10 + 295     # Pressure around 295-305 (arbitrary units)
-    metal_mask = torch.randint(0, 2, (batch_size, height, width)).float()
-    T_m = torch.rand(batch_size, height, width) * 20 + 290
+    pass
+    # # Suppose the environment state is represented by 5 channels:
+    # # Gas Temperature (T_g), Gas Density (n_g), Pressure (P), Metal Mask, Metal Temperature (T_m)
+    # # For demonstration, create a dummy batch of two samples.
+    # batch_size = 2
+    # height = 200
+    # width = 100
+    # # Create random example data for each channel.
+    # T_g = torch.rand(batch_size, height, width) * 20 + 290   # Temperatures around 290-310 K
+    # n_g = torch.rand(batch_size, height, width) * 0.2 + 0.9    # Densities around 0.9-1.1
+    # P   = torch.rand(batch_size, height, width) * 10 + 295     # Pressure around 295-305 (arbitrary units)
+    # metal_mask = torch.randint(0, 2, (batch_size, height, width)).float()
+    # T_m = torch.rand(batch_size, height, width) * 20 + 290
 
-    # Stack the channels into a single tensor with shape [batch, channels, height, width]
-    state = torch.stack([T_g, n_g, P, metal_mask, T_m], dim=1)
+    # # Stack the channels into a single tensor with shape [batch, channels, height, width]
+    # state = torch.stack([T_g, n_g, P, metal_mask, T_m], dim=1)
     
-    # Instantiate the encoder and compute the latent vector.
-    encoder = PhysicsEncoder(input_channels=5, latent_dim=256)
-    latent_vector = encoder(state)
-    print("Latent vector shape:", latent_vector.shape)  # Expected: [batch_size, 256]
+    # # Instantiate the encoder and compute the latent vector.
+    # encoder = PhysicsEncoder(input_channels=5, latent_dim=256)
+    # latent_vector = encoder(state)
+    # print("Latent vector shape:", latent_vector.shape)  # Expected: [batch_size, 256]
